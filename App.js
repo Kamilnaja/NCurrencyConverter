@@ -14,6 +14,7 @@ import { currencies } from './currencies';
 import ConversionResult from './elements/ConversionResult';
 import Info from './elements/Info';
 import NumberInput from './elements/NumberInput';
+import CurrenciesPicker from './elements/CurrenciesPicker';
 
 export default class App extends React.Component {
     constructor(props) {
@@ -24,8 +25,21 @@ export default class App extends React.Component {
             convertionResult: 0,
             amountOfMoney: 0,
             info: '',
-            blurRadius: 1
         }
+    }
+
+    setCurrencyToConvert(itemValue) {
+        this.setState({
+            currencyToConvert: itemValue
+        })
+        console.log(this.state);
+    }
+
+    setCurrencyTarget(itemValue) {
+        this.setState({
+            currencyTarget: itemValue
+        })
+        console.log(this.state);
     }
 
     onChange(formValue) {
@@ -35,13 +49,8 @@ export default class App extends React.Component {
 
         this.setState({
             amountOfMoney: formValue,
-            blurRadius: 3
         })
-        if (!this.state.amountOfMoney) {
-            this.setState({
-                blurRadius: 1
-            })
-        }
+
         if (currencyToConvert === currencyTarget) {
             this.setState({
                 convertionResult: this.state.currencyToConvert,
@@ -64,48 +73,29 @@ export default class App extends React.Component {
                 <Image
                     source={require('./img/flower-3421864_960_720.jpg')}
                     style={styles.bgImage}
-                    blurRadius={this.state.blurRadius}
                 >
                 </Image>
                 <View style={styles.wrapper}>
+                    <CurrenciesPicker
+                        currencyTarget={this.state.currencyTarget}
+                        currencyToConvert={this.state.currencyToConvert}
+                        setCurrencyToConvert={this.setCurrencyToConvert.bind(this)}
+                        setCurrencyTarget={this.setCurrencyTarget.bind(this)}
+                    >
+                    </CurrenciesPicker>
                     <Info info={this.state.info}></Info>
-                    <Text style={styles.label}>
-                        Z waluty
-                    </Text>
-                    <Picker
-                        selectedValue={this.state.currencyToConvert}
-                        onValueChange={itemValue => this.setState({ currencyToConvert: itemValue })}
-                        style={styles.selectInput}
-                    >
-                        {
-                            this.displayCurrencies()
-                        }
-                    </Picker>
-                    <Text style={styles.label}>
-                        Na walutę
-                    </Text>
-                    <Picker
-                        selectedValue={this.state.currencyTarget}
-                        onValueChange={itemValue => this.setState({ currencyTarget: itemValue })}
-                        style={styles.selectInput}
-                    >
-                        {
-                            this.displayCurrencies()
-                        }
-                    </Picker>
                     <NumberInput
                         onChange={this.onChange.bind(this)}
                         currencyToConvert={this.state.currencyToConvert}
                     ></NumberInput>
                     <ConversionResult
-                        conversionResult={this.state.convertionResult}></ConversionResult>
+                        conversionResult={this.state.convertionResult}>
+                    </ConversionResult>
                 </View>
             </View>
         );
     }
 
-    displayCurrencies() {
-        return currencies.map((item, id) => <Picker.Item label={item.label} value={item.value} key={id}></Picker.Item>);
-    }
+
 }
 
