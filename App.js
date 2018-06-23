@@ -9,32 +9,52 @@ import {
   Picker
 } from 'react-native';
 import { styles } from './styles/style';
-import ConversionResult from './ConversionResult';
 import { currencies } from './currencies';
+import ConversionResult from './elements/ConversionResult';
+import Info from './elements/Info';
+import NumberInput from './elements/NumberInput';
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currencyToConvert: '',
-      currencyTarget: '',
-      convertionResult: ''
+      currencyToConvert: currencies[0].value,
+      currencyTarget: currencies[1].value,
+      convertionResult: 0,
+      amountOfMoney: 0,
+      info: ''
     }
   }
+
   onChange(formValue) {
+    console.log(this.state);
+    let currencyToConvert = this.state.currencyToConvert;
+    let currencyTarget = this.state.currencyTarget;
+
     this.setState({
-      convertionResult: formValue
+      amountOfMoney: formValue
     })
+
+    if (currencyToConvert === currencyTarget) {
+      this.setState({
+        convertionResult: this.state.currencyToConvert,
+        info: 'Wybrałeś dwie takie same waluty!'
+      })
+    } else if (currencyToConvert === "PLN" && currencyTarget === "CZK") {
+      this.setState({
+        convertionResult: 1.6 * this.state.amountOfMoney
+      })
+    } else if (currencyToConvert === "PLN" && currencyTarget === "EUR") {
+      this.setState({
+        conversionResult: 4 * this.state.amountOfMoney
+      })
+    }
   }
 
   render() {
-    const exchangeRate = 0.166062265;
-    let score = exchangeRate * this.state.amountOfKorons;
-    let humanReadableScore = Math.floor(score * 100) / 100;
-
     return (
-
       <View style={styles.container}>
+        <Info info={this.state.info}></Info>
         <Text style={styles.label}>
           Z waluty
           </Text>
@@ -62,13 +82,7 @@ export default class App extends React.Component {
         <Text>
           Wpisz ilość {this.state.currencyToConvert}
         </Text>
-        <TextInput
-          ref={(el) => { this.formValue = el; }}
-          style={styles.input}
-          keyboardType='numeric'
-          onChangeText={formValue => this.onChange(formValue)
-          }
-        />
+        <NumberInput onChange={this.onChange.bind(this)} ></NumberInput>
         <ConversionResult conversionResult={this.state.convertionResult}></ConversionResult>
       </View>
     );
