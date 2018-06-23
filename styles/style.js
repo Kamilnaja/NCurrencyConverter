@@ -13,12 +13,11 @@ export const styles = StyleSheet.create({
     },
     input: {
         height: 40,
-        borderColor: 'green',
-        borderWidth: 1,
         alignSelf: 'stretch',
         paddingLeft: 15,
         marginTop: 10,
-        width: '100%'
+        width: '100%',
+        color: '#fff'
     },
     output: {
         fontSize: 40,
@@ -48,8 +47,14 @@ export const styles = StyleSheet.create({
         bottom: 0,
         left: 0,
     },
-    bigInfo: {
-        marginTop: 50,
+    sectionSemitransparent: {
+        paddingTop: 10,
+        paddingBottom: 10,
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        borderRadius: 7,
+        marginTop: 15,
+    },
+    info: {
         color: '#fff'
     }
 });

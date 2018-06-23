@@ -6,10 +6,7 @@ export default class NumberInput extends Component {
 
     render() {
         return (
-            <View>
-                <Text style={styles.bigInfo}>
-                    Konwertuje z następującej waluty {this.props.currencyToConvert}
-                </Text>
+            <View style={styles.sectionSemitransparent}>
                 <TextInput
                     ref={(el) => { this.formValue = el; }}
                     style={styles.input}
@@ -17,7 +14,6 @@ export default class NumberInput extends Component {
                     onChangeText={formValue => this.props.onChange(formValue)}
                 />
             </View>
-
         )
     }
 }

@@ -14,31 +14,35 @@ export default class CurrenciesPicker extends Component {
     render() {
         return (
             <View>
-                <Text style={styles.label}>
-                    Z waluty
+                <View style={styles.sectionSemitransparent}>
+                    <Text style={styles.label}>
+                        Z waluty
                     </Text>
-                <Picker
-                    selectedValue={this.props.currencyToConvert}
-                    onValueChange={itemValue =>
-                        this.props.setCurrencyToConvert(itemValue)}
-                    style={styles.selectInput}
-                >
-                    {
-                        this.displayCurrencies()
-                    }
-                </Picker>
-                <Text style={styles.label}>
-                    Na walutę
+                    <Picker
+                        selectedValue={this.props.currencyToConvert}
+                        onValueChange={itemValue =>
+                            this.props.setCurrencyToConvert(itemValue)}
+                        style={styles.selectInput}
+                    >
+                        {
+                            this.displayCurrencies()
+                        }
+                    </Picker>
+                </View>
+                <View style={styles.sectionSemitransparent}>
+                    <Text style={styles.label}>
+                        Na walutę
                     </Text>
-                <Picker
-                    selectedValue={this.props.currencyTarget}
-                    onValueChange={itemValue => this.props.setCurrencyTarget(itemValue)}
-                    style={styles.selectInput}
-                >
-                    {
-                        this.displayCurrencies()
-                    }
-                </Picker>
+                    <Picker
+                        selectedValue={this.props.currencyTarget}
+                        onValueChange={itemValue => this.props.setCurrencyTarget(itemValue)}
+                        style={styles.selectInput}
+                    >
+                        {
+                            this.displayCurrencies()
+                        }
+                    </Picker>
+                </View>
             </View>
         )
     }

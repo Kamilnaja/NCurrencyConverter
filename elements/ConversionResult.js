@@ -1,14 +1,18 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { Text, View } from 'react-native';
 import { styles } from './../styles/style.js';
 
 class ConversionResult extends React.Component {
 
     render() {
         return (
-            <Text style={styles.output}>
-                {this.props.conversionResult}
-            </Text>)
+            <View style={styles.sectionSemitransparent}>
+                <Text style={styles.output}>
+                    {Math.floor(this.props.conversionResult * 100) / 100}
+
+                </Text>
+            </View>
+        )
     }
 }
 

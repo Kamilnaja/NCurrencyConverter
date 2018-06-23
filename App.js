@@ -15,6 +15,8 @@ import ConversionResult from './elements/ConversionResult';
 import Info from './elements/Info';
 import NumberInput from './elements/NumberInput';
 import CurrenciesPicker from './elements/CurrenciesPicker';
+import { currenciesTable } from './currenciesTable';
+
 
 export default class App extends React.Component {
     constructor(props) {
@@ -28,17 +30,27 @@ export default class App extends React.Component {
         }
     }
 
+    resetCash() {
+        this.state = {
+            convertionResult: 0,
+            amountOfMoney: 0,
+            info: '',
+        }
+    }
+
     setCurrencyToConvert(itemValue) {
-        this.setState({
-            currencyToConvert: itemValue
-        })
+        this.resetCash(),
+            this.setState({
+                currencyToConvert: itemValue
+            })
         console.log(this.state);
     }
 
     setCurrencyTarget(itemValue) {
-        this.setState({
-            currencyTarget: itemValue
-        })
+        this.resetCash(),
+            this.setState({
+                currencyTarget: itemValue
+            })
         console.log(this.state);
     }
 
@@ -58,11 +70,11 @@ export default class App extends React.Component {
             })
         } else if (currencyToConvert === "PLN" && currencyTarget === "CZK") {
             this.setState({
-                convertionResult: 1.6 * this.state.amountOfMoney
+                convertionResult: currenciesTable.PLNtoCZK * this.state.amountOfMoney
             })
         } else if (currencyToConvert === "PLN" && currencyTarget === "EUR") {
             this.setState({
-                conversionResult: 4 * this.state.amountOfMoney
+                conversionResult: currenciesTable.PLNtoEUR * this.state.amountOfMoney
             })
         }
     }
@@ -83,19 +95,19 @@ export default class App extends React.Component {
                         setCurrencyTarget={this.setCurrencyTarget.bind(this)}
                     >
                     </CurrenciesPicker>
-                    <Info info={this.state.info}></Info>
+                    {/* <Info info={this.state.info} style={this.state.sectionSemitransparent}></Info> */}
                     <NumberInput
                         onChange={this.onChange.bind(this)}
                         currencyToConvert={this.state.currencyToConvert}
                     ></NumberInput>
                     <ConversionResult
-                        conversionResult={this.state.convertionResult}>
+                        conversionResult={this.state.convertionResult}
+                        style={styles.sectionSemitransparent}
+                    >
                     </ConversionResult>
                 </View>
             </View>
         );
     }
-
-
 }
 
