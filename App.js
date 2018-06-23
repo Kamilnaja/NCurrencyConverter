@@ -1,3 +1,5 @@
+// @ts-check
+
 import React from 'react';
 import {
   StyleSheet,
@@ -6,15 +8,23 @@ import {
   TextInput,
   Picker
 } from 'react-native';
-import { styles } from './style';
+import { styles } from './styles/style';
+import ConversionResult from './ConversionResult';
+import { currencies } from './currencies';
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       currencyToConvert: '',
-      currencyTarget: ''
+      currencyTarget: '',
+      convertionResult: ''
     }
+  }
+  onChange(formValue) {
+    this.setState({
+      convertionResult: formValue
+    })
   }
 
   render() {
@@ -30,38 +40,42 @@ export default class App extends React.Component {
           </Text>
         <Picker
           selectedValue={this.state.currencyToConvert}
-          onValueChange={(itemValue, indexItem) => this.setState({ currencyToConvert: itemValue })}
+          onValueChange={itemValue => this.setState({ currencyToConvert: itemValue })}
           style={styles.selectInput}
         >
-          <Picker.Item label="Korona czeska" value="CZK" />
-          <Picker.Item label="Polski złoty" value="PLN" />
+          {
+            this.displayCurrencies()
+          }
         </Picker>
         <Text style={styles.label}>
           Na walutę
           </Text>
         <Picker
           selectedValue={this.state.currencyTarget}
-          onValueChange={(itemValue, indexItem) => this.setState({ currencyTarget: itemValue })}
+          onValueChange={itemValue => this.setState({ currencyTarget: itemValue })}
           style={styles.selectInput}
         >
-          <Picker.Item label="Korona czeska" value="CZK" />
-          <Picker.Item label="Polski złoty" value="PLN" />
+          {
+            this.displayCurrencies()
+          }
         </Picker>
+        <Text>
+          Wpisz ilość {this.state.currencyToConvert}
+        </Text>
         <TextInput
           ref={(el) => { this.formValue = el; }}
           style={styles.input}
           keyboardType='numeric'
-          onChangeText={(formValue) =>
-            this.setState({
-              amountOfKorons: formValue
-            })
+          onChangeText={formValue => this.onChange(formValue)
           }
         />
-        <Text style={styles.output}>
-          {humanReadableScore} pln
-        </Text>
+        <ConversionResult conversionResult={this.state.convertionResult}></ConversionResult>
       </View>
     );
+  }
+
+  displayCurrencies() {
+    return currencies.map((item, id) => <Picker.Item label={item.label} value={item.value} key={id}></Picker.Item>);
   }
 }
 

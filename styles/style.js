@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
     container: {
-        flex: 0.5,
+        flex: 1,
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'flex-start',
@@ -15,7 +15,7 @@ export const styles = StyleSheet.create({
         borderWidth: 1,
         alignSelf: 'stretch',
         paddingLeft: 15,
-        marginTop: 10
+        marginTop: 50
     },
     output: {
         fontSize: 40,
